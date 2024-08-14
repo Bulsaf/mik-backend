@@ -56,7 +56,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
                 );
 
         ChatMessageEntity chatMessageEntity = chatMessageMapper.toEntity(userMessageRequest);
-        chatMessageEntity.setChatId(userMessageRequest.chatId());
+        chatMessageEntity.setChatId(chatRoomDTO.id());
 
         return chatMessageMapper.toDto(chatMessageRepository.save(chatMessageEntity));
     }
@@ -79,7 +79,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 
     private Optional<ChatMessageDTO> getGeneratedMessageFromAi(ChatMessageDTO savedUserMessageDTO) {
 
-        URI requestUri = URI.create(aiServiceUrl + "/api/v1/generate");
+        /*URI requestUri = URI.create(aiServiceUrl + "/api/v1/generate");
 
         var response = RestClient.create()
                 .post()
@@ -89,7 +89,8 @@ public class ChatMessageServiceImpl implements ChatMessageService {
                 .toEntity(ChatMessageDTO.class);
 
         return Optional
-                .ofNullable(response.getBody());
+                .ofNullable(response.getBody());*/
+        return Optional.ofNullable(savedUserMessageDTO);
     }
 
 }
