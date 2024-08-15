@@ -37,7 +37,8 @@ public class ChatMessageServiceImpl implements ChatMessageService {
                 .orElseThrow(() -> new BadRequestException("Message is not generated"));
 
         ChatMessageEntity chatMessageEntity = chatMessageMapper.toEntity(generatedMessage);
-        chatMessageEntity.setSenderId(savedUserMessageDTO.senderId());
+        chatMessageEntity.setSenderId("mik");
+        chatMessageEntity.setRecipientId(savedUserMessageDTO.senderId());
 
         ChatMessageDTO createdMessage = chatMessageMapper
                 .toDto(chatMessageRepository.save(chatMessageEntity));
