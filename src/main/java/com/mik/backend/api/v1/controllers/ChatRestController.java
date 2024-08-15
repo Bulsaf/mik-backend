@@ -4,14 +4,12 @@ import com.mik.backend.api.v1.dtos.base.ChatMessageDTO;
 import com.mik.backend.api.v1.dtos.response.UserUUIDResponse;
 import com.mik.backend.api.v1.services.ChatMessageService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
+@CrossOrigin(value = "*", maxAge = 43200)
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
