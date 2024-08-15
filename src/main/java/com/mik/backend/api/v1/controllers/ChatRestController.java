@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @CrossOrigin(origins = "http://localhost:5173",
         methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT,RequestMethod.OPTIONS,RequestMethod.HEAD},
-        allowCredentials = "*",
+        allowCredentials = "true",
         allowedHeaders = "*",
         maxAge = 43200)
 @RestController
