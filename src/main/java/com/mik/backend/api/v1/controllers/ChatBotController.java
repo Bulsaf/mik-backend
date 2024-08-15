@@ -7,7 +7,13 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+@CrossOrigin(origins = "http://localhost:5173",
+        allowCredentials = "true",
+        allowedHeaders = "*",
+        maxAge = 43200)
 @Controller
 @RequiredArgsConstructor
 public class ChatBotController {
