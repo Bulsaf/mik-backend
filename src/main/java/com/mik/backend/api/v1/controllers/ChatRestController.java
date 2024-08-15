@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@CrossOrigin(value = "*",
-        origins = {"http://localhost:5173"},
+@CrossOrigin(origins = {"http://localhost:5173"},
         methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT,RequestMethod.OPTIONS,RequestMethod.HEAD},
         allowCredentials = "*",
         allowedHeaders = "*",
