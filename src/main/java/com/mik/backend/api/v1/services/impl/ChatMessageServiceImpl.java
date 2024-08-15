@@ -60,6 +60,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
         return chatMessageMapper.toDto(chatMessageRepository.save(chatMessageEntity));
     }
 
+    @Override
     public List<ChatMessageDTO> getAllMessages(String senderId) {
         ChatRoomDTO chatRoomDTO = chatRoomService.getChatRoomBySenderIdAndRecipientId(
                 senderId,
