@@ -41,7 +41,7 @@ public class ChatMessageEntity {
     private Map<String, Object> message;
 
     @Builder.Default
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at")
     private Instant createdAt = Instant.now(Clock.system(ZoneId.of("Europe/Moscow")));
 
 }

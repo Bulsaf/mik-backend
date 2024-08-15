@@ -29,7 +29,6 @@ public class ChatMessageMapper {
                 .senderId(dto.senderId())
                 .recipientId(dto.recipientId())
                 .message(dto.message())
-                .createdAt(dto.createdAt())
                 .build();
     }
 
