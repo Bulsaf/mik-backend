@@ -9,7 +9,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@CrossOrigin(value = "*", maxAge = 43200)
+@CrossOrigin(value = "*",
+        methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT,RequestMethod.OPTIONS,RequestMethod.HEAD},
+        allowCredentials = "*",
+        allowedHeaders = "*",
+        maxAge = 43200)
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
