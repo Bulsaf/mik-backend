@@ -9,10 +9,9 @@ import java.util.UUID;
 @Builder
 public record ChatMessageDTO(
         UUID id,
-        UUID chatId,
         String senderId,
         String recipientId,
-        Map<String, Object> message,
+        Map<String, Object> content,
         Instant createdAt
 ) {
 }

@@ -12,10 +12,9 @@ public class ChatMessageMapper {
 
         return ChatMessageDTO.builder()
                 .id(entity.getId())
-                .chatId(entity.getChatId())
                 .senderId(entity.getSenderId())
                 .recipientId(entity.getRecipientId())
-                .message(entity.getMessage())
+                .content(entity.getContent())
                 .createdAt(entity.getCreatedAt())
                 .build();
     }
@@ -25,10 +24,9 @@ public class ChatMessageMapper {
 
         return ChatMessageEntity.builder()
                 .id(dto.id())
-                .chatId(dto.chatId())
                 .senderId(dto.senderId())
                 .recipientId(dto.recipientId())
-                .message(dto.message())
+                .content(dto.content())
                 .build();
     }
 
