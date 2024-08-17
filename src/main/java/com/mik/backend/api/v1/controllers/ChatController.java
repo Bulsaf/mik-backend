@@ -10,14 +10,14 @@ import java.util.List;
 import java.util.UUID;
 
 @CrossOrigin(origins = "http://localhost:5173",
-        methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT,RequestMethod.OPTIONS,RequestMethod.HEAD},
+        methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PUT},
         allowCredentials = "true",
         allowedHeaders = "*",
         maxAge = 43200)
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-public class ChatRestController {
+public class ChatController {
 
     private final ChatMessageService chatMessageService;
 

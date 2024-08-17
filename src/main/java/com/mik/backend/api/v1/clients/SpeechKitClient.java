@@ -1,4 +1,4 @@
-package com.mik.backend.utils;
+package com.mik.backend.api.v1.clients;
 
 import com.mik.backend.api.v1.dtos.response.SpeechKitResponse;
 import com.mik.backend.configs.SpeechKitConfig;
@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class SpeechKitUtils {
+public class SpeechKitClient {
 
     private final SpeechKitConfig speechKitConfig;
 
