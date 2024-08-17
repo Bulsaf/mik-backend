@@ -8,7 +8,6 @@ import java.util.UUID;
 @Builder
 public record UserMessageRequest(
         String senderId,
-        String recipientId,
         Map<String, Object> content
 ) {
 }

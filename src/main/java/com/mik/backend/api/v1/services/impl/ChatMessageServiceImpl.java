@@ -4,6 +4,7 @@ import com.mik.backend.api.v1.clients.MikAiClient;
 import com.mik.backend.api.v1.clients.SpeechKitClient;
 import com.mik.backend.api.v1.dtos.base.ChatMessageDTO;
 import com.mik.backend.api.v1.dtos.request.UserMessageRequest;
+import com.mik.backend.api.v1.dtos.response.ChatMessageResponse;
 import com.mik.backend.api.v1.dtos.response.SpeechKitResponse;
 import com.mik.backend.api.v1.exceptions.BadRequestException;
 import com.mik.backend.api.v1.mappers.ChatMessageMapper;
@@ -36,7 +37,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     }
 
     @Override
-    public ChatMessageDTO createAiMessage(ChatMessageDTO savedUserMessageDTO) {
+    public ChatMessageResponse createAiMessage(ChatMessageDTO savedUserMessageDTO) {
 
         ChatMessageDTO generatedMessage = mikAiClient.getGeneratedMessageFromAi(savedUserMessageDTO)
                 .orElseThrow(() -> new BadRequestException("Message is not generated"));
@@ -48,7 +49,9 @@ public class ChatMessageServiceImpl implements ChatMessageService {
         ChatMessageDTO createdMessage = chatMessageMapper
                 .toDto(chatMessageRepository.save(chatMessageEntity));
 
-        return createdMessage;
+        return ChatMessageResponse.builder()
+                .content(createdMessage.content())
+                .build();
     }
 
     @Override

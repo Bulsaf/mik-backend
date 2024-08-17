@@ -23,7 +23,7 @@ public class SpeechKitConfig {
 
     private final Boolean rawResults = false;
 
-    private final String format = "lpcm";
+    private final String format = "oggopus";
 
     private final String sampleRateHertz = "48000";
 

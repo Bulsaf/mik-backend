@@ -2,6 +2,7 @@ package com.mik.backend.api.v1.controllers;
 
 import com.mik.backend.api.v1.dtos.base.ChatMessageDTO;
 import com.mik.backend.api.v1.dtos.request.UserMessageRequest;
+import com.mik.backend.api.v1.dtos.response.ChatMessageResponse;
 import com.mik.backend.api.v1.services.ChatMessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -26,7 +27,7 @@ public class ChatBotController {
 
         ChatMessageDTO savedUserMessageDTO = chatMessageService.saveUserTextMessage(userMessageRequest);
 
-        ChatMessageDTO chatBotMessageResponse = chatMessageService.createAiMessage(savedUserMessageDTO);
+        ChatMessageResponse chatBotMessageResponse = chatMessageService.createAiMessage(savedUserMessageDTO);
 
         messagingTemplate.convertAndSendToUser(
                 userMessageRequest.senderId(),
@@ -40,7 +41,7 @@ public class ChatBotController {
 
         ChatMessageDTO savedUserMessageDTO = chatMessageService.saveUserAudioMessage(userMessageRequest);
 
-        ChatMessageDTO chatBotMessageResponse = chatMessageService.createAiMessage(savedUserMessageDTO);
+        ChatMessageResponse chatBotMessageResponse = chatMessageService.createAiMessage(savedUserMessageDTO);
 
         messagingTemplate.convertAndSendToUser(
                 userMessageRequest.senderId(),
