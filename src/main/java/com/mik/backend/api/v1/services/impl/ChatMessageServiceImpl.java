@@ -12,9 +12,12 @@ import com.mik.backend.api.v1.services.ChatMessageService;
 import com.mik.backend.storage.entities.ChatMessageEntity;
 import com.mik.backend.storage.repositories.ChatMessageRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,6 +30,8 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 
     private final SpeechKitClient speechKitClient;
     private final MikAiClient mikAiClient;
+
+    private final Logger logger = LoggerFactory.getLogger(ChatMessageServiceImpl.class);
 
     @Override
     public List<ChatMessageDTO> getAllMessages(String senderId) {
@@ -81,8 +86,12 @@ public class ChatMessageServiceImpl implements ChatMessageService {
             throw new BadRequestException("Message is not writing");
         }
 
+        logger.info(userMessageRequest.content().toString());
+
         byte[] audioMessageFromBase64 = Base64.getMimeDecoder()
                 .decode(userMessageRequest.content().get("audioURL").toString());
+
+        logger.info(Arrays.toString(audioMessageFromBase64));
 
         SpeechKitResponse transMessage = speechKitClient.recognition(audioMessageFromBase64)
                 .orElseThrow(()-> new BadRequestException("Speech Kit is not recognized"));

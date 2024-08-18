@@ -19,8 +19,8 @@ public class SpeechKitClient {
     public Optional<SpeechKitResponse> recognition(byte[] bytes) {
 
         URI uri = URI.create(String.format(speechKitConfig.getSpeechKitUri()+
-                "?topic=%s&lang=%s",
-                speechKitConfig.getTopic(), speechKitConfig.getLang()));
+                "?topic=%s&lang=%s&folderId=%s",
+                speechKitConfig.getTopic(), speechKitConfig.getLang(), speechKitConfig.getFolderId()));
 
         var response = RestClient.create()
                 .post()
