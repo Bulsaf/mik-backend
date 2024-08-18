@@ -88,22 +88,12 @@ public class ChatMessageServiceImpl implements ChatMessageService {
             throw new BadRequestException("Message is not writing");
         }
 
-        logger.info(userMessageRequest.content().toString());
-
-        byte[] audioMessageFromBase64 = Base64.getMimeDecoder()
-                .decode(userMessageRequest.content().get("audioURL").toString());
-
-        logger.info(Arrays.toString(audioMessageFromBase64));
-
-        SpeechKitResponse transMessage = speechKitClient.recognition(audioMessageFromBase64)
-                .orElseThrow(()-> new BadRequestException("Speech Kit is not recognized"));
+        String recognizedMessage = recognisedMessageFromRequest(userMessageRequest);
 
         Map<String, Object> newMessageContent = Map.of(
-                "audioURL", userMessageRequest.content().get("audioURL").toString(),
-                "message", transMessage.result(),
+                "message", recognizedMessage,
                 "type","audio"
         );
-
         ChatMessageEntity chatMessageEntity = ChatMessageEntity.builder()
                 .senderId(userMessageRequest.senderId())
                 .recipientId("mik")
@@ -111,6 +101,21 @@ public class ChatMessageServiceImpl implements ChatMessageService {
                 .build();
 
         return chatMessageMapper.toDto(chatMessageRepository.save(chatMessageEntity));
+    }
+
+    private String recognisedMessageFromRequest(UserMessageRequest userMessageRequest) {
+
+        logger.info(userMessageRequest.content().toString());
+
+        byte[] audioMessageFromBase64 = Base64.getMimeDecoder()
+                .decode(userMessageRequest.content().get("audioURL").toString());
+
+        logger.info(Arrays.toString(audioMessageFromBase64));
+
+        SpeechKitResponse speechKitResponse = speechKitClient.recognition(audioMessageFromBase64)
+                .orElseThrow(()-> new BadRequestException("Speech Kit is not recognized"));
+
+        return speechKitResponse.result();
     }
 
 }

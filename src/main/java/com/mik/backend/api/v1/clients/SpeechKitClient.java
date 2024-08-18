@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
 import java.net.URI;
-import java.util.Arrays;
 import java.util.Optional;
 
 @Component
