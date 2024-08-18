@@ -81,7 +81,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
             throw new BadRequestException("Message is not writing");
         }
 
-        byte[] audioMessageFromBase64 = Base64.getDecoder()
+        byte[] audioMessageFromBase64 = Base64.getMimeDecoder()
                 .decode(userMessageRequest.content().get("audioURL").toString());
 
         SpeechKitResponse transMessage = speechKitClient.recognition(audioMessageFromBase64)
