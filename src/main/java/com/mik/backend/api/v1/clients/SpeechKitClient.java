@@ -25,7 +25,7 @@ public class SpeechKitClient {
         var response = RestClient.create()
                 .post()
                 .uri(uri)
-                .header("Authorization", "Api-key " + speechKitConfig.getApiKey())
+                .header("Authorization", "Api-Key " + speechKitConfig.getApiKey())
                 .body(bytes)
                 .retrieve()
                 .toEntity(SpeechKitResponse.class);
