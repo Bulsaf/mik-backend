@@ -94,6 +94,9 @@ public class ChatMessageServiceImpl implements ChatMessageService {
                 "message", recognizedMessage,
                 "type","audio"
         );
+
+        logger.info(newMessageContent.toString());
+
         ChatMessageEntity chatMessageEntity = ChatMessageEntity.builder()
                 .senderId(userMessageRequest.senderId())
                 .recipientId("mik")
@@ -110,10 +113,10 @@ public class ChatMessageServiceImpl implements ChatMessageService {
         byte[] audioMessageFromBase64 = Base64.getMimeDecoder()
                 .decode(userMessageRequest.content().get("audioURL").toString());
 
-        logger.info(Arrays.toString(audioMessageFromBase64));
-
         SpeechKitResponse speechKitResponse = speechKitClient.recognition(audioMessageFromBase64)
                 .orElseThrow(()-> new BadRequestException("Speech Kit is not recognized"));
+
+        logger.info(speechKitResponse.result());
 
         return speechKitResponse.result();
     }
