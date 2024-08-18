@@ -4,13 +4,11 @@ import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
-import java.net.URI;
-
 @Getter
 @Configuration
 public class SpeechKitConfig {
 
-    private final String speechKitUri = "https://stt.api.cloud.yandex.net/speech/speech/v1/stt:recognize";
+    private final String speechKitUri = "https://stt.api.cloud.yandex.net/speech/v1/stt:recognize";
 
     @Value("${speech-kit.api-key}")
     private String apiKey;
