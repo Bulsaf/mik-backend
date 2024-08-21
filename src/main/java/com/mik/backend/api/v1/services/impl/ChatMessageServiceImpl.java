@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;
@@ -44,14 +43,16 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     }
 
     @Override
+    @Transactional
     public ChatMessageResponse createAiMessage(ChatMessageDTO savedUserMessageDTO) {
 
-        ChatMessageDTO generatedMessage = mikAiClient.getGeneratedMessageFromAi(savedUserMessageDTO)
-                .orElseThrow(() -> new BadRequestException("Message is not generated"));
+        Map<String, Object> generatedContent = mikAiClient.getGeneratedMessageFromAi(savedUserMessageDTO);
 
-        ChatMessageEntity chatMessageEntity = chatMessageMapper.toEntity(generatedMessage);
-        chatMessageEntity.setSenderId("mik");
-        chatMessageEntity.setRecipientId(savedUserMessageDTO.senderId());
+        ChatMessageEntity chatMessageEntity = ChatMessageEntity.builder()
+                .senderId("mik")
+                .recipientId(savedUserMessageDTO.senderId())
+                .content(generatedContent)
+                .build();
 
         ChatMessageDTO createdMessage = chatMessageMapper
                 .toDto(chatMessageRepository.save(chatMessageEntity));
@@ -118,7 +119,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 
         logger.info(speechKitResponse.result());
 
-        return speechKitResponse.result();
+        return speechKitResponse.result().substring(0,speechKitResponse.result().length()/2+1);
     }
 
 }

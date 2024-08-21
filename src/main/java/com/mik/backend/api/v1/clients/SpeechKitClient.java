@@ -2,7 +2,6 @@ package com.mik.backend.api.v1.clients;
 
 import com.mik.backend.api.v1.dtos.response.SpeechKitResponse;
 import com.mik.backend.api.v1.exceptions.BadRequestException;
-import com.mik.backend.api.v1.services.impl.ChatMessageServiceImpl;
 import com.mik.backend.configs.SpeechKitConfig;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
