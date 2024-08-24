@@ -27,8 +27,8 @@ public class MikAiClient {
 
         logger.info(savedUserMessageDTO.toString());
         AiMessageRequest aiMessageRequest = AiMessageRequest.builder()
-                .senderId(savedUserMessageDTO.senderId())
-                .content(savedUserMessageDTO.content().get("message").toString())
+                .user_id(savedUserMessageDTO.senderId())
+                .user_input(savedUserMessageDTO.content().get("message").toString())
                 .build();
 
         logger.info(aiMessageRequest.toString());

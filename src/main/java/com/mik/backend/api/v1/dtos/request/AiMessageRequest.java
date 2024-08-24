@@ -4,7 +4,7 @@ import lombok.Builder;
 
 @Builder
 public record AiMessageRequest(
-        String senderId,
-        String content
+        String user_input,
+        String user_id
 ) {
 }

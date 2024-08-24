@@ -56,7 +56,6 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 
         ChatMessageDTO createdMessage = chatMessageMapper
                 .toDto(chatMessageRepository.save(chatMessageEntity));
-
         return ChatMessageResponse.builder()
                 .content(createdMessage.content())
                 .build();
