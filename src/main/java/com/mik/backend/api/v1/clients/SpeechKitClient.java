@@ -4,6 +4,7 @@ import com.mik.backend.api.v1.dtos.response.SpeechKitResponse;
 import com.mik.backend.api.v1.exceptions.BadRequestException;
 import com.mik.backend.configs.SpeechKitConfig;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatusCode;
@@ -13,13 +14,12 @@ import org.springframework.web.client.RestClient;
 import java.net.URI;
 import java.util.Optional;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class SpeechKitClient {
 
     private final SpeechKitConfig speechKitConfig;
-
-    private final Logger logger = LoggerFactory.getLogger(SpeechKitClient.class);
 
     public Optional<SpeechKitResponse> recognition(byte[] bytes) {
 
@@ -39,7 +39,7 @@ public class SpeechKitClient {
             throw new BadRequestException("Invalid response code: " + response.getStatusCode());
         }
 
-        logger.info(response.toString());
+        log.info(response.toString());
 
         return Optional.ofNullable(response.getBody());
 

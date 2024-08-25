@@ -19,13 +19,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ChatController {
 
-    private final ChatMessageService chatMessageService;
-
-    @GetMapping("/messages/{senderId}")
-    List<ChatMessageDTO> getAllMessages(@PathVariable("senderId") String senderId) {
-        return chatMessageService.getAllMessages(senderId);
-    }
-
     @GetMapping("/get-uuid")
     public UserUUIDResponse getUserUUID(){
         return new UserUUIDResponse(UUID.randomUUID());

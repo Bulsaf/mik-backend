@@ -22,7 +22,8 @@ public class TestController {
     )
     public Map<String, Object> chatMessage(@RequestBody ChatMessageDTO chatMessageDTO) {
 
-        return mikAiClient.getGeneratedMessageFromAi(chatMessageDTO);
+        return mikAiClient.getResponse(chatMessageDTO.senderId(),
+                chatMessageDTO.content().get("message").toString());
     }
 
 }

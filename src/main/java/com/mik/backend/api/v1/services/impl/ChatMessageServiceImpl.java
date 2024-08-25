@@ -1,6 +1,5 @@
 package com.mik.backend.api.v1.services.impl;
 
-import com.mik.backend.api.v1.clients.MikAiClient;
 import com.mik.backend.api.v1.clients.SpeechKitClient;
 import com.mik.backend.api.v1.dtos.base.ChatMessageDTO;
 import com.mik.backend.api.v1.dtos.request.UserMessageRequest;
@@ -8,20 +7,19 @@ import com.mik.backend.api.v1.dtos.response.ChatMessageResponse;
 import com.mik.backend.api.v1.dtos.response.SpeechKitResponse;
 import com.mik.backend.api.v1.exceptions.BadRequestException;
 import com.mik.backend.api.v1.mappers.ChatMessageMapper;
+import com.mik.backend.api.v1.services.AIChatService;
 import com.mik.backend.api.v1.services.ChatMessageService;
 import com.mik.backend.storage.entities.ChatMessageEntity;
 import com.mik.backend.storage.repositories.ChatMessageRepository;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Base64;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ChatMessageServiceImpl implements ChatMessageService {
@@ -30,23 +28,14 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     private final ChatMessageMapper chatMessageMapper;
 
     private final SpeechKitClient speechKitClient;
-    private final MikAiClient mikAiClient;
-
-    private final Logger logger = LoggerFactory.getLogger(ChatMessageServiceImpl.class);
-
-    @Override
-    public List<ChatMessageDTO> getAllMessages(String senderId) {
-
-        return chatMessageRepository.findAllBySenderId(senderId).stream()
-                .map(chatMessageMapper::toDto)
-                .collect(Collectors.toList());
-    }
+    private final AIChatService aiChatService;
 
     @Override
     @Transactional
     public ChatMessageResponse createAiMessage(ChatMessageDTO savedUserMessageDTO) {
 
-        Map<String, Object> generatedContent = mikAiClient.getGeneratedMessageFromAi(savedUserMessageDTO);
+        Map<String, Object> generatedContent = aiChatService.getResponse(savedUserMessageDTO.senderId(),
+                savedUserMessageDTO.content().get("message").toString());
 
         ChatMessageEntity chatMessageEntity = ChatMessageEntity.builder()
                 .senderId("mik")
@@ -89,13 +78,12 @@ public class ChatMessageServiceImpl implements ChatMessageService {
         }
 
         String recognizedMessage = recognisedMessageFromRequest(userMessageRequest);
-
         Map<String, Object> newMessageContent = Map.of(
                 "message", recognizedMessage,
                 "type","audio"
         );
 
-        logger.info(newMessageContent.toString());
+        log.info(newMessageContent.toString());
 
         ChatMessageEntity chatMessageEntity = ChatMessageEntity.builder()
                 .senderId(userMessageRequest.senderId())
@@ -108,7 +96,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 
     private String recognisedMessageFromRequest(UserMessageRequest userMessageRequest) {
 
-        logger.info(userMessageRequest.content().toString());
+        log.info(userMessageRequest.content().toString());
 
         byte[] audioMessageFromBase64 = Base64.getMimeDecoder()
                 .decode(userMessageRequest.content().get("audioURL").toString());
@@ -116,7 +104,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
         SpeechKitResponse speechKitResponse = speechKitClient.recognition(audioMessageFromBase64)
                 .orElseThrow(()-> new BadRequestException("Speech Kit is not recognized"));
 
-        logger.info(speechKitResponse.result());
+        log.info(speechKitResponse.result());
 
         return speechKitResponse.result().substring(0,speechKitResponse.result().length()/2+1);
     }
