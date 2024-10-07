@@ -25,6 +25,6 @@ public class SpeechKitConfig {
 
     private final String sampleRateHertz = "48000";
 
-    private final String folderId = "b1giu5kd5icm9odp9ch4";
+    private final String folderId = "";
 
 }

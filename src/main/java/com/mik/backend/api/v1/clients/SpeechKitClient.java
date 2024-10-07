@@ -5,8 +5,6 @@ import com.mik.backend.api.v1.exceptions.BadRequestException;
 import com.mik.backend.configs.SpeechKitConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;

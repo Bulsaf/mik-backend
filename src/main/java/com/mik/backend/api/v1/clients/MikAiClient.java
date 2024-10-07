@@ -1,14 +1,10 @@
 package com.mik.backend.api.v1.clients;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mik.backend.api.v1.dtos.base.ChatMessageDTO;
 import com.mik.backend.api.v1.dtos.request.AIMessageRequest;
 import com.mik.backend.api.v1.exceptions.BadRequestException;
 import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
